@@ -20,13 +20,15 @@
   const redirectStateStorageKey = 'bold_agent_redirect_state';
   const region = getQueryVariable('region');
   const environment = getQueryVariable('environment');  // likely to be underfined most of the time
-
+  console.log('region: '+region);
+  console.log('environment: '+environment);
+    
   function redirectToLoginPage() {
     const redirectUri = getQueryVariable('redirectUri');
     const domain = genesysCloudDomainForRegion(region, environment);
     const clientId = getQueryVariable('clientId');
     const loginUrl = `https://login.${domain}/oauth/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}`;
-
+    console.log('loginUrl: '+loginUrl);
     saveRedirectState();
 
     window.location.href = loginUrl;
