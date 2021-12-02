@@ -128,7 +128,7 @@
 
   function getQueryVariable(variable) {
     var query = window.location.href.split('?');
-    var vars = query[1].split('&');
+    var vars = query[1] ? query[1].split('&') : [];
     for (var i = 0; i < vars.length; i++) {
       var pair = vars[i].split('=');
       if (decodeURIComponent(pair[0]) == variable) {
@@ -136,6 +136,7 @@
       }
     }
   }
+
   function debugUrlParams(params) {
     for (let pair of params.entries()) {
       $('#data').append(`<li>${pair[0]} = '${pair[1]}'</li>`);
