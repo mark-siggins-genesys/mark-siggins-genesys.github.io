@@ -66,6 +66,9 @@
 
   function exec(params) {
     const hashParams = new URLSearchParams(window.location.hash.slice(1));
+    console.log(`hashParams - ${JSON.stringify(hashParams)}`);
+    console.log(`queryParams - ${window.location.search}`);
+    console.log(`href - ${window.location.href}`);
 
     let authData = parseAuthParams(hashParams);
 
