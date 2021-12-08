@@ -25,8 +25,9 @@
     const redirectUri = getQueryVariable('redirectUri');
     const domain = genesysCloudDomainForRegion(region, environment);
     const clientId = getQueryVariable('clientId');
+    // const loginUrl = `https://apps.inindca.com/admin/#/admin/oauth/authorizations/${clientId}?response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}`
 
-    const loginUrl = `https://login.${domain}/admin/#/admin/oauth/authorizations/${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}`;
+    const loginUrl = `https://login.${domain}/oauth/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}`;
     console.log('loginUrl: '+loginUrl);
     saveRedirectState();
 
@@ -120,6 +121,13 @@
       if (!isNaN(expiresIn * 1)) {
         auth.expirationTime = Date.now() + expiresIn * 1000;
       } else { // default of 1 hour expiry
+        auth.expirationTime = Date.now() + 3600 * 1000;
+      }
+    } else {
+      const authToken = getQueryVariable('auth');
+      if (authToken) {
+        auth.accessToken = authToken;
+        // review if this works
         auth.expirationTime = Date.now() + 3600 * 1000;
       }
     }
