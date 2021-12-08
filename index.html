@@ -19,13 +19,12 @@
   const authStorageKey = 'bold_agent_genesys_cloud_auth';
   const redirectStateStorageKey = 'bold_agent_redirect_state';
   const region = getQueryVariable('region');
-  const environment = getQueryVariable('environment');  // likely to be underfined most of the time
+  const environment = getQueryVariable('environment');  // likely to be undefined most of the time
 
   function redirectToLoginPage() {
     const redirectUri = getQueryVariable('redirectUri');
     const domain = genesysCloudDomainForRegion(region, environment);
     const clientId = getQueryVariable('clientId');
-    // const loginUrl = `https://apps.inindca.com/admin/#/admin/oauth/authorizations/${clientId}?response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}`
 
     const loginUrl = `https://login.${domain}/oauth/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}`;
     console.log('loginUrl: '+loginUrl);
@@ -66,10 +65,6 @@
 
   function exec(params) {
     const hashParams = new URLSearchParams(window.location.hash.slice(1));
-    console.log(`hashParams - ${JSON.stringify(hashParams)}`);
-    console.log(`queryParams - ${window.location.search}`);
-    console.log(`href - ${window.location.href}`);
-
     let authData = parseAuthParams(hashParams);
 
     if (isAuthValid(authData)) {
@@ -143,12 +138,6 @@
       if (decodeURIComponent(pair[0]) == variable) {
         return decodeURIComponent(pair[1]);
       }
-    }
-  }
-
-  function debugUrlParams(params) {
-    for (let pair of params.entries()) {
-      $('#data').append(`<li>${pair[0]} = '${pair[1]}'</li>`);
     }
   }
 
