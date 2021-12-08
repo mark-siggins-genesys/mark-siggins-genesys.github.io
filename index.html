@@ -20,13 +20,13 @@
   const redirectStateStorageKey = 'bold_agent_redirect_state';
   const region = getQueryVariable('region');
   const environment = getQueryVariable('environment');  // likely to be underfined most of the time
-    
+
   function redirectToLoginPage() {
     const redirectUri = getQueryVariable('redirectUri');
     const domain = genesysCloudDomainForRegion(region, environment);
     const clientId = getQueryVariable('clientId');
     // const loginUrl = `https://apps.inindca.com/admin/#/admin/oauth/authorizations/${clientId}?response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}`
-      
+
     const loginUrl = `https://login.${domain}/oauth/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}`;
     console.log('loginUrl: '+loginUrl);
     saveRedirectState();
@@ -35,10 +35,10 @@
   }
 
   function getAuthData() {
-    const itemStr = localStorage.getItem(authStorageKey) || '{}';
     let item;
 
     try {
+      const itemStr = localStorage.getItem(authStorageKey) || '{}';
       item = JSON.parse(itemStr);
     } catch (err) {
       console.error('Could not deserialise auth data', err);
