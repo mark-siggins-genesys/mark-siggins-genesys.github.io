@@ -21,6 +21,10 @@
   const region = getQueryVariable('region');
   const environment = getQueryVariable('environment');  // likely to be undefined most of the time
 
+  console.log(`Main Region - ${region}, environment - ${environment}`)
+  console.log(`window href - ${window.location.href}`)
+  console.log(`window location - ${JSON.stringify(window.location)}`)
+
   function redirectToLoginPage() {
     const redirectUri = getQueryVariable('redirectUri');
     const domain = genesysCloudDomainForRegion(region, environment);
@@ -35,7 +39,6 @@
 
   function getAuthData() {
     let item;
-
     try {
       const itemStr = localStorage.getItem(authStorageKey) || '{}';
       item = JSON.parse(itemStr);
@@ -183,6 +186,7 @@
 
   function getRegionFromStorage() {
     const savedQueryParams = getSavedRedirectState();
+    console.log(`getRegionFromStorage - ${JSON.stringify(savedQueryParams)}`)
 
     if (savedQueryParams) {
       const queryParams = new URLSearchParams(savedQueryParams);
@@ -191,6 +195,7 @@
   }
   function redirectToGadget(customerId, accessToken) {
     const regionDefined = region ? region : getRegionFromStorage();
+
     console.log(`regionDefined ${region}`);
 
     const domain = genesysCloudDomainForRegion(regionDefined, environment);
